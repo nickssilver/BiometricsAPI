@@ -1,17 +1,6 @@
-﻿using BiometricsAPI.Models;
-using Microsoft.EntityFrameworkCore;
-
-namespace BiometricsAPI.Data
+﻿namespace BiometricsAPI.Data
 {
-    public class BiometricsContext : DbContext
+    public class BiometricsContext
     {
-        public BiometricsContext(DbContextOptions dbContextOptions): base(dbContextOptions)
-        {
-        }
-
-        public DbSet<Biometric> Biometrics { get; set; }
-        public DbSet<AuditLog> AuditLogs { get; set; }
-       
     }
 }
-    
