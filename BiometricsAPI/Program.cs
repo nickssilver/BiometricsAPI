@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 builder.Services.AddDbContext<BiometricsContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("BiometricsConnection")));
 builder.Services.AddScoped<RegistrationService>();

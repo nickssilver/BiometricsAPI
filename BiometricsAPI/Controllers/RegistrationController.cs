@@ -9,6 +9,7 @@ namespace BiometricsAPI.Controllers
 {
     [ApiController]
     [Route("[controller]")]
+    //[Route("api/")]
     public class RegistrationController : ControllerBase
     {
         private readonly RegistrationService _registrationService;
@@ -46,6 +47,17 @@ namespace BiometricsAPI.Controllers
             {
                 return BadRequest("Registration failed");
             }
+        }
+
+        [HttpGet("{studentId}")]
+        public async Task<ActionResult<StudentModel>> GetStudentData(string studentId)
+        {
+            var studentData = await _registrationService.GetStudentData(studentId);
+            if (studentData == null)
+            {
+                return NotFound();
+            }
+            return studentData;
         }
     }
 }
