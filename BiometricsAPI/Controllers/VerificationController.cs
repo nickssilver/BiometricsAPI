@@ -1,7 +1,5 @@
 ﻿using BiometricsAPI.Services;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using BiometricsAPI.Models;
 
 namespace BiometricsAPI.Controllers
 {
@@ -17,7 +15,7 @@ namespace BiometricsAPI.Controllers
         }
 
         [HttpPost]
-        public IActionResult VerifyFingerprint([FromBody] byte[] fingerprint)
+        public IActionResult VerifyFingerprint([FromBody] string fingerprint)
         {
             var student = _verificationService.VerifyFingerprint(fingerprint);
             if (student != null)

@@ -1,8 +1,4 @@
-﻿
-using System;
-using System.Threading.Tasks;
-using BiometricsAPI.Data;
-using BiometricsAPI.Models;
+﻿using BiometricsAPI.Data;
 
 namespace BiometricsAPI.Services
 {
@@ -15,11 +11,11 @@ namespace BiometricsAPI.Services
             _context = context;
         }
 
-        public async Task<bool> RegisterStudent(Biometric model)
+        public async Task<bool> RegisterStudent(BiometricModel model)
         {
             try
             {
-                await _context.Biometrics.AddAsync(model);
+                _context.Biometrics.Add(model);
                 await _context.SaveChangesAsync();
                 return true;
             }

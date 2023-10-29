@@ -1,8 +1,9 @@
 ﻿using BiometricsAPI.Models;
 using BiometricsAPI.Services;
 using Microsoft.AspNetCore.Mvc;
+using System;
+using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
-
 
 namespace BiometricsAPI.Controllers
 {
@@ -18,8 +19,24 @@ namespace BiometricsAPI.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> RegisterStudent([FromBody] Biometric model)
+        public async Task<IActionResult> RegisterStudent([FromBody] BiometricModel registrationData)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest("Invalid data provided.");
+            }
+
+            var model = new BiometricModel
+            {
+                StudentId = registrationData.StudentId,
+                StudentName = registrationData.StudentName,
+                ClassId = registrationData.ClassId,
+                Status = registrationData.Status,
+                Arrears = registrationData.Arrears,
+                Fingerprint1 = registrationData.Fingerprint1,
+                Fingerprint2 = registrationData.Fingerprint2
+            };
+
             var result = await _registrationService.RegisterStudent(model);
             if (result)
             {

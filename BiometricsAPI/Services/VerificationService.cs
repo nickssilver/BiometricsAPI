@@ -1,7 +1,5 @@
-﻿
-using System;
+﻿using System;
 using System.Linq;
-using System.Threading.Tasks;
 using BiometricsAPI.Data;
 using BiometricsAPI.Models;
 
@@ -16,13 +14,13 @@ namespace BiometricsAPI.Services
             _context = context;
         }
 
-        public Biometric VerifyFingerprint(byte[] fingerprint)
+        public BiometricModel VerifyFingerprint(string fingerprint)
         {
             try
             {
-                var student = _context.Biometrics.FirstOrDefault(b =>
-                    b.Fingerprint1.SequenceEqual(fingerprint) ||
-                    b.Fingerprint2.SequenceEqual(fingerprint));
+                byte[] fingerprintBytes = Convert.FromBase64String(fingerprint);
+
+                BiometricModel? student = _context.Biometrics.FirstOrDefault(b => b.Fingerprint1.SequenceEqual(fingerprintBytes) || b.Fingerprint2.SequenceEqual(fingerprintBytes));
 
                 if (student != null)
                 {
@@ -30,7 +28,6 @@ namespace BiometricsAPI.Services
                     {
                         StudentId = student.StudentId,
                         StudentName = student.StudentName,
-                        Action = "Verification",
                         VerificationTimestamp = DateTime.UtcNow
                     };
 
