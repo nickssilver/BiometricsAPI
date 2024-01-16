@@ -17,7 +17,8 @@ namespace BiometricsAPI.Controllers
         [HttpPost]
         public IActionResult VerifyFingerprint([FromBody] string fingerprint)
         {
-            var student = _verificationService.VerifyFingerprint(fingerprint);
+            byte[] fingerprintBytes = Convert.FromBase64String(fingerprint);    
+            var student = _verificationService.VerifyFingerprint(fingerprintBytes);
             if (student != null)
             {
                 return Ok(student);

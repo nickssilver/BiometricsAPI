@@ -14,11 +14,11 @@ namespace BiometricsAPI.Services
             _context = context;
         }
 
-        public BiometricModel VerifyFingerprint(string fingerprint)
+        public BiometricModel VerifyFingerprint(byte[] fingerprintBytes)
         {
             try
             {
-                byte[] fingerprintBytes = Convert.FromBase64String(fingerprint);
+                //byte[] fingerprintBytes = Convert.FromBase64String(fingerprint);
 
                 BiometricModel? student = _context.Biometrics.FirstOrDefault(b => b.Fingerprint1.SequenceEqual(fingerprintBytes) || b.Fingerprint2.SequenceEqual(fingerprintBytes));
 
