@@ -29,22 +29,5 @@ namespace BiometricsAPI.Controllers
             }
         }
 
-        /*[HttpPost]
-        public IActionResult VerifyStudentId([FromBody] string studentId)
-        {
-            var student = _verificationService.VerifyStudentId(studentId);
-            if (student != null)
-            {
-                return Ok(student);
-            }
-            else
-            {
-                return NotFound("Student not found");
-            }
-        }*/
-
-
-
-
-    }
+       }
 }
