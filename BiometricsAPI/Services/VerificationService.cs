@@ -15,20 +15,20 @@ namespace BiometricsAPI.Services
         }
 
         public BiometricModel VerifyFingerprint(byte[] fingerprintBytes)
+        //public BiometricModel VerifyStudentId(string studentId)
         {
             try
             {
-                //byte[] fingerprintBytes = Convert.FromBase64String(fingerprint);
-
+                //BiometricModel? student = _context.Biometrics.FirstOrDefault(b => b.StudentId == studentId);
                 BiometricModel? student = _context.Biometrics.FirstOrDefault(b => b.Fingerprint1.SequenceEqual(fingerprintBytes) || b.Fingerprint2.SequenceEqual(fingerprintBytes));
 
                 if (student != null)
                 {
-                    var log = new AuditLog
+                    var log = new AuditLogs
                     {
                         StudentId = student.StudentId,
                         StudentName = student.StudentName,
-                        VerificationTimestamp = DateTime.UtcNow
+                        VerificationTimestamp = DateTime.UtcNow.AddHours(3)
                     };
 
                     _context.AuditLogs.Add(log);
@@ -42,5 +42,7 @@ namespace BiometricsAPI.Services
                 return null;
             }
         }
+
+
     }
 }

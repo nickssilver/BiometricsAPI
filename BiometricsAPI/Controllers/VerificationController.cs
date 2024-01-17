@@ -17,7 +17,7 @@ namespace BiometricsAPI.Controllers
         [HttpPost]
         public IActionResult VerifyFingerprint([FromBody] string fingerprint)
         {
-            byte[] fingerprintBytes = Convert.FromBase64String(fingerprint);    
+            byte[] fingerprintBytes = Convert.FromBase64String(fingerprint);
             var student = _verificationService.VerifyFingerprint(fingerprintBytes);
             if (student != null)
             {
@@ -28,5 +28,23 @@ namespace BiometricsAPI.Controllers
                 return NotFound("Student not found");
             }
         }
+
+        /*[HttpPost]
+        public IActionResult VerifyStudentId([FromBody] string studentId)
+        {
+            var student = _verificationService.VerifyStudentId(studentId);
+            if (student != null)
+            {
+                return Ok(student);
+            }
+            else
+            {
+                return NotFound("Student not found");
+            }
+        }*/
+
+
+
+
     }
 }

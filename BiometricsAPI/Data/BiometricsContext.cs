@@ -11,16 +11,16 @@ namespace BiometricsAPI.Data
         }
 
         public DbSet<BiometricModel> Biometrics { get; set; }
-        public DbSet<AuditLog> AuditLogs { get; set; }
+        public DbSet<AuditLogs> AuditLogs { get; set; }
         public DbSet<StudentModel> Register { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<BiometricModel>().ToTable("Biometrics");
-            modelBuilder.Entity<AuditLog>().ToTable("AuditLogs");
+            modelBuilder.Entity<AuditLogs>().ToTable("AuditLogs");
             modelBuilder.Entity<BiometricModel>().HasKey(b => b.StudentId);
-            modelBuilder.Entity<AuditLog>().HasKey(a => a.StudentId);
+            modelBuilder.Entity<AuditLogs>().HasKey(a => a.StudentId);
             modelBuilder.Entity<StudentModel>().HasNoKey();
             modelBuilder.Entity<BiometricModel>()
             .Property(b => b.StudentId)
@@ -30,4 +30,3 @@ namespace BiometricsAPI.Data
 
     }
 }
-
