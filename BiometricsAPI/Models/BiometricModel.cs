@@ -12,7 +12,9 @@ public class BiometricModel
     public string Status { get; set; }
     [Required]
     public decimal Arrears { get; set; }
+    [Required]
     public byte[] Fingerprint1 { get; set; } // Binary data representation of the first fingerprint
+    [Required]
     public byte[] Fingerprint2 { get; set; } // Binary data representation of the second fingerprint
 
     // ...
