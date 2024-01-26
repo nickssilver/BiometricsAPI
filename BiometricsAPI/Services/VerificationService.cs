@@ -43,6 +43,20 @@ namespace BiometricsAPI.Services
             }
         }
 
+        public List<BiometricModel> GetAllFingerprintTemplates()
+        {
+            try
+            {
+                var templates = _context.Biometrics.ToList();
+                return templates;
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
+
+
 
     }
 }

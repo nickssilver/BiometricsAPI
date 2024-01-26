@@ -1,5 +1,6 @@
 ﻿using BiometricsAPI.Services;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace BiometricsAPI.Controllers
 {
@@ -29,5 +30,28 @@ namespace BiometricsAPI.Controllers
             }
         }
 
-       }
+        [HttpGet("GetAllFingerprintTemplates")]
+        public IActionResult GetAllFingerprintTemplates()
+        {
+            try
+            {
+                var students = _verificationService.GetAllFingerprintTemplates();
+                if (students != null)
+                {
+                    return Ok(students);
+                }
+                else
+                {
+                    return BadRequest("An error occurred while trying to retrieve the templates.");
+                }
+            }
+            catch (Exception)
+            {
+                return BadRequest("An error occurred while trying to retrieve the templates.");
+            }
+        }
+
+
+
+    }
 }
