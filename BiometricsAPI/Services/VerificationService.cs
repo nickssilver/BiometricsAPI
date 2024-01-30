@@ -14,34 +14,26 @@ namespace BiometricsAPI.Services
             _context = context;
         }
 
-        public BiometricModel VerifyFingerprint(byte[] fingerprintBytes)
-        
+        public void VerifyFingerprint(AuditLogs log)
         {
             try
             {
-            
-                BiometricModel? student = _context.Biometrics.FirstOrDefault(b => b.Fingerprint1.SequenceEqual(fingerprintBytes) || b.Fingerprint2.SequenceEqual(fingerprintBytes));
-
-                if (student != null)
+                var auditLog = new AuditLogs
                 {
-                    var log = new AuditLogs
-                    {
-                        StudentId = student.StudentId,
-                        StudentName = student.StudentName,
-                        VerificationTimestamp = DateTime.UtcNow.AddHours(3)
-                    };
+                    StudentId = log.StudentId,
+                    StudentName = log.StudentName,
+                    VerificationTimestamp = DateTime.UtcNow.AddHours(3)
+                };
 
-                    _context.AuditLogs.Add(log);
-                    _context.SaveChanges();
-                }
-
-                return student;
+                _context.AuditLogs.Add(auditLog);
+                _context.SaveChanges();
             }
             catch (Exception)
             {
-                return null;
+                throw;
             }
         }
+
 
         public List<BiometricModel> GetAllFingerprintTemplates()
         {

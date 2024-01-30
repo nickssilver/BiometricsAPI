@@ -9,7 +9,7 @@ namespace BiometricsAPI.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    //[Route("api/")]
+ 
     public class RegistrationController : ControllerBase
     {
         private readonly RegistrationService _registrationService;
@@ -59,5 +59,18 @@ namespace BiometricsAPI.Controllers
             }
             return studentData;
         }
+
+        [HttpDelete("{studentId}")]
+        public async Task<IActionResult> DeleteStudent(string studentId)
+        {
+            var result = await _registrationService.DeleteStudent(studentId);
+            if (!result)
+            {
+                return NotFound("Student not found");
+            }
+
+            return Ok();
+        }
+
     }
 }

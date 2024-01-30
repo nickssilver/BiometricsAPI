@@ -38,5 +38,23 @@ namespace BiometricsAPI.Services
 
             return _mapper.Map<StudentModel>(studentData);
         }
+
+        public async Task<bool> DeleteStudent(string studentId)
+        {
+            var student = await _context.Biometrics
+                .Where(s => s.StudentId == studentId)
+                .FirstOrDefaultAsync();
+
+            if (student == null)
+            {
+                return false;
+            }
+
+            _context.Biometrics.Remove(student);
+            await _context.SaveChangesAsync();
+
+            return true;
+        }
+
     }
 }

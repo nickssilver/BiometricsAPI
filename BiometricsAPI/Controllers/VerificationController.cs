@@ -1,4 +1,5 @@
-﻿using BiometricsAPI.Services;
+﻿using BiometricsAPI.Models;
+using BiometricsAPI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -16,19 +17,19 @@ namespace BiometricsAPI.Controllers
         }
 
         [HttpPost]
-        public IActionResult VerifyFingerprint([FromBody] string fingerprint)
+        public IActionResult VerifyFingerprint([FromBody] AuditLogs log)
         {
-            byte[] fingerprintBytes = Convert.FromBase64String(fingerprint);
-            var student = _verificationService.VerifyFingerprint(fingerprintBytes);
-            if (student != null)
+            try
             {
-                return Ok(student);
+                _verificationService.VerifyFingerprint(log);
+                return Ok();
             }
-            else
+            catch (Exception ex)
             {
-                return NotFound("Student not found");
+                return StatusCode(500, $"Internal server error: {ex}");
             }
         }
+
 
         [HttpGet("GetAllFingerprintTemplates")]
         public IActionResult GetAllFingerprintTemplates()
