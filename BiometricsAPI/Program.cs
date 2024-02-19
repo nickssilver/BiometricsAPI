@@ -10,6 +10,7 @@ builder.Services.AddDbContext<BiometricsContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("BiometricsConnection")));
 builder.Services.AddScoped<RegistrationService>();
 builder.Services.AddScoped<VerificationService>();
+builder.Services.AddScoped<IUserService, UserService>();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

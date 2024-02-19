@@ -13,6 +13,7 @@ namespace BiometricsAPI.Data
         public DbSet<BiometricModel> Biometrics { get; set; }
         public DbSet<AuditLogs> AuditLogs { get; set; }
         public DbSet<StudentModel> Register { get; set; }
+        public DbSet<Biousers> Biousers { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -25,6 +26,9 @@ namespace BiometricsAPI.Data
             modelBuilder.Entity<BiometricModel>()
             .Property(b => b.StudentId)
             .ValueGeneratedNever();
+
+            modelBuilder.Entity<Biousers>()
+                .HasKey(b => b.UserId);
         }
 
 
