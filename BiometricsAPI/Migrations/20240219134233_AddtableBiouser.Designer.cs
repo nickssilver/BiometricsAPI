@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BiometricsAPI.Migrations
 {
     [DbContext(typeof(BiometricsContext))]
-    [Migration("20240122160319_enforcentnull")]
-    partial class enforcentnull
+    [Migration("20240219134233_AddtableBiouser")]
+    partial class AddtableBiouser
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -31,6 +31,7 @@ namespace BiometricsAPI.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<decimal>("Arrears")
+                        .HasPrecision(18, 2)
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<string>("ClassId")
@@ -75,6 +76,41 @@ namespace BiometricsAPI.Migrations
                     b.ToTable("AuditLogs", (string)null);
                 });
 
+            modelBuilder.Entity("BiometricsAPI.Models.Biousers", b =>
+                {
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Contact")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Department")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Permissions")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Pin")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("UserId");
+
+                    b.HasIndex("Pin")
+                        .IsUnique();
+
+                    b.HasIndex("UserId")
+                        .IsUnique();
+
+                    b.ToTable("Biousers");
+                });
+
             modelBuilder.Entity("BiometricsAPI.Models.StudentModel", b =>
                 {
                     b.Property<string>("AdmnNo")
@@ -82,6 +118,7 @@ namespace BiometricsAPI.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<decimal>("Arrears")
+                        .HasPrecision(18, 2)
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<string>("Class")

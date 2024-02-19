@@ -16,7 +16,7 @@
                 .ForMember(dest => dest.StudStatus, opt => opt.MapFrom(src => src.StudStatus))
                 .ForMember(dest => dest.Arrears, opt => opt.MapFrom(src => src.Arrears));
 
-            
+          
         }
 
         private void ForMember(Func<object, object> value1, Func<object, object> value2)

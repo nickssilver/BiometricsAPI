@@ -29,6 +29,21 @@ namespace BiometricsAPI.Data
 
             modelBuilder.Entity<Biousers>()
                 .HasKey(b => b.UserId);
+
+            //Permissions is stored as an integer
+    modelBuilder.Entity<Biousers>()
+        .Property(b => b.Permissions)
+        .HasConversion<int>();
+
+            modelBuilder.Entity<BiometricModel>()
+       .Property(b => b.Arrears)
+       .HasPrecision(18, 2); // Example precision and scale
+
+            modelBuilder.Entity<StudentModel>()
+                .Property(s => s.Arrears)
+                .HasPrecision(18, 2); // Example precision and scale
+
+          
         }
 
 
