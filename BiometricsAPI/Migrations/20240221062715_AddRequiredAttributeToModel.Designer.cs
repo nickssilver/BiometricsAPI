@@ -4,6 +4,7 @@ using BiometricsAPI.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BiometricsAPI.Migrations
 {
     [DbContext(typeof(BiometricsContext))]
-    partial class BiometricsContextModelSnapshot : ModelSnapshot
+    [Migration("20240221062715_AddRequiredAttributeToModel")]
+    partial class AddRequiredAttributeToModel
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -56,20 +59,6 @@ namespace BiometricsAPI.Migrations
                     b.ToTable("Biometrics", (string)null);
                 });
 
-            modelBuilder.Entity("BiometricsAPI.Models.AdminUser", b =>
-                {
-                    b.Property<string>("Username")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("Password")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Username");
-
-                    b.ToTable("AdminUsers");
-                });
-
             modelBuilder.Entity("BiometricsAPI.Models.AuditLogs", b =>
                 {
                     b.Property<string>("StudentId")
@@ -94,8 +83,7 @@ namespace BiometricsAPI.Migrations
 
                     b.Property<string>("Contact")
                         .IsRequired()
-                        .HasMaxLength(10)
-                        .HasColumnType("nvarchar(10)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Department")
                         .IsRequired()
@@ -110,12 +98,14 @@ namespace BiometricsAPI.Migrations
 
                     b.Property<string>("Pin")
                         .IsRequired()
-                        .HasMaxLength(4)
-                        .HasColumnType("nvarchar(4)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("UserId");
 
                     b.HasIndex("Pin")
+                        .IsUnique();
+
+                    b.HasIndex("UserId")
                         .IsUnique();
 
                     b.ToTable("Biousers");

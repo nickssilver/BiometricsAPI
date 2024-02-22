@@ -1,8 +1,9 @@
-﻿using BiometricsAPI.Services;
-using BiometricsAPI.Models;
+﻿using BiometricsAPI.Models;
+using BiometricsAPI.Services;
 using Microsoft.AspNetCore.Authorization;
-using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace BiometricsAPI.Controllers
 {
@@ -19,15 +20,32 @@ namespace BiometricsAPI.Controllers
 
         [AllowAnonymous]
         [HttpPost("register")]
-        public async Task<IActionResult> Register([FromBody] RegisterViewModel model)
+        public async Task<IActionResult> Register([FromBody] Biousers user)
         {
-            var user = await _userService.RegisterUserAsync(model.User, model.Permissions);
-            if (user == null)
+            if (ModelState.IsValid)
             {
-                return BadRequest(new { message = "User could not be registered" });
+                // Extract permissions from the user object
+                var selectedPermissions = new List<Permissions> { user.Permissions };
+
+                // Perform any necessary validation
+
+                // Save the user entity to the database
+                var registeredUser = await _userService.RegisterUserAsync(user, selectedPermissions);
+                if (registeredUser != null)
+                {
+                    return Ok(registeredUser);
+                }
+                else
+                {
+                    return BadRequest(new { message = "User could not be registered" });
+                }
             }
-            return Ok(user);
+            else
+            {
+                return BadRequest(ModelState);
+            }
         }
+
 
         [AllowAnonymous]
         [HttpPost("authenticate")]
@@ -52,11 +70,5 @@ namespace BiometricsAPI.Controllers
             }
             return Ok(user);
         }
-    }
-
-    public class RegisterViewModel
-    {
-        public Biousers User { get; set; }
-        public List<Permissions> Permissions { get; set; }
     }
 }

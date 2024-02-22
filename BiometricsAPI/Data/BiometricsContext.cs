@@ -14,7 +14,7 @@ namespace BiometricsAPI.Data
         public DbSet<AuditLogs> AuditLogs { get; set; }
         public DbSet<StudentModel> Register { get; set; }
         public DbSet<Biousers> Biousers { get; set; }
-
+        public DbSet<AdminUser> AdminUsers { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -27,23 +27,20 @@ namespace BiometricsAPI.Data
             .Property(b => b.StudentId)
             .ValueGeneratedNever();
 
+               modelBuilder.Entity<BiometricModel>()
+             .Property(b => b.Arrears)
+             .HasPrecision(18, 2); // Example precision and scale
+
+               modelBuilder.Entity<StudentModel>()
+              .Property(s => s.Arrears)
+              .HasPrecision(18, 2); // Example precision and scale
+
+            modelBuilder.Entity<AdminUser>()
+               .HasKey(a => a.Username);
+
             modelBuilder.Entity<Biousers>()
-                .HasKey(b => b.UserId);
-
-            //Permissions is stored as an integer
-    modelBuilder.Entity<Biousers>()
-        .Property(b => b.Permissions)
-        .HasConversion<int>();
-
-            modelBuilder.Entity<BiometricModel>()
-       .Property(b => b.Arrears)
-       .HasPrecision(18, 2); // Example precision and scale
-
-            modelBuilder.Entity<StudentModel>()
-                .Property(s => s.Arrears)
-                .HasPrecision(18, 2); // Example precision and scale
-
-          
+                .HasIndex(u => u.Pin)
+                .IsUnique();
         }
 
 
