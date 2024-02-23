@@ -25,7 +25,14 @@ namespace BiometricsAPI.Controllers
             if (ModelState.IsValid)
             {
                 // Extract permissions from the user object
-                var selectedPermissions = new List<Permissions> { user.Permissions };
+                var selectedPermissions = new List<bool>
+                {
+                    user.RegisterPermission,
+                    user.VerifyPermission,
+                    user.RefactorPermission,
+                    user.AnalyticsPermission,
+                    user.ManagementPermission
+                };
 
                 // Perform any necessary validation
 
@@ -46,7 +53,6 @@ namespace BiometricsAPI.Controllers
             }
         }
 
-
         [AllowAnonymous]
         [HttpPost("authenticate")]
         public async Task<IActionResult> Authenticate(string pin)
@@ -56,8 +62,19 @@ namespace BiometricsAPI.Controllers
             {
                 return Unauthorized(new { message = "Invalid pin" });
             }
-            return Ok(user);
+
+            // Return the UserId along with permissions
+            return Ok(new
+            {
+                UserId = user.UserId,
+                user.RegisterPermission,
+                user.VerifyPermission,
+                user.RefactorPermission,
+                user.AnalyticsPermission,
+                user.ManagementPermission
+            });
         }
+
 
         [Authorize]
         [HttpGet("{id}")]

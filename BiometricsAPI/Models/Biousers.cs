@@ -1,5 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace BiometricsAPI.Models
@@ -19,7 +18,6 @@ namespace BiometricsAPI.Models
         [Required]
         [StringLength(4)] // Assuming PIN is 4 characters long
         [RegularExpression("^[0-9]*$")] // PIN should only contain digits
-       
         public string Pin { get; set; }
 
         [Required]
@@ -28,8 +26,18 @@ namespace BiometricsAPI.Models
         public string Contact { get; set; }
 
         [Required]
-        public Permissions Permissions { get; set; } // Modify to match frontend
+        public bool RegisterPermission { get; set; }
 
-        // Constructor, getters, setters, etc.
+        [Required]
+        public bool VerifyPermission { get; set; }
+
+        [Required]
+        public bool RefactorPermission { get; set; }
+
+        [Required]
+        public bool AnalyticsPermission { get; set; }
+
+        [Required]
+        public bool ManagementPermission { get; set; }
     }
 }

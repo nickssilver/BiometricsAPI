@@ -15,24 +15,24 @@ namespace BiometricsAPI.Services
             _context = context;
         }
 
-        public async Task<Biousers> RegisterUserAsync(Biousers newUser, List<Permissions> selectedPermissions)
+        public async Task<Biousers> RegisterUserAsync(Biousers newUser, List<bool> selectedPermissions)
         {
             if (await IsUserIdUnique(newUser.UserId) && await IsPinUnique(newUser.Pin))
             {
-                // Combine the selected permissions into a single Permissions value
-                Permissions permissions = Permissions.None;
-                foreach (var permission in selectedPermissions)
-                {
-                    permissions |= permission;
-                }
+                // Set permissions based on the provided list
+                newUser.RegisterPermission = selectedPermissions[0];
+                newUser.VerifyPermission = selectedPermissions[1];
+                newUser.RefactorPermission = selectedPermissions[2];
+                newUser.AnalyticsPermission = selectedPermissions[3];
+                newUser.ManagementPermission = selectedPermissions[4];
 
-                newUser.Permissions = permissions;
                 _context.Biousers.Add(newUser);
                 await _context.SaveChangesAsync();
                 return newUser;
             }
             return null;
         }
+
 
         public async Task<Biousers> AuthenticateUserAsync(string pin)
         {
