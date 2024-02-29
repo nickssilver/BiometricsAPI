@@ -7,7 +7,7 @@ namespace BiometricsAPI.Models
     {
         [Required]
         [Key]
-        public string UserId { get; set; } // Primary Key
+        public string UserId { get; set; } = Guid.NewGuid().ToString();
 
         [Required]
         public string Name { get; set; }
@@ -18,7 +18,7 @@ namespace BiometricsAPI.Models
         [Required]
         [StringLength(4)] // Assuming PIN is 4 characters long
         [RegularExpression("^[0-9]*$")] // PIN should only contain digits
-        public string Pin { get; set; }
+        public string Pin { get; set; } = "";
 
         [Required]
         [StringLength(10)] // Assuming contact number is 10 digits long

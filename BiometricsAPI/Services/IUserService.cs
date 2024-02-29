@@ -10,5 +10,7 @@ namespace BiometricsAPI.Services
         Task<Biousers> AuthenticateUserAsync(string pin);
         Task<IEnumerable<Biousers>> GetAllUsersAsync();
         Task<Biousers> GetUserByIdAsync(string id);
+        Task<Biousers> EditUserAsync(string id, Biousers updatedUser);
+        Task<bool> DeleteUserAsync(string id);
     }
 }

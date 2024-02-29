@@ -75,17 +75,42 @@ namespace BiometricsAPI.Controllers
             });
         }
 
-
-        [Authorize]
-        [HttpGet("{id}")]
-        public async Task<IActionResult> GetUser(string id)
+    
+        [HttpGet]
+        public async Task<IActionResult> GetAllUsers()
         {
-            var user = await _userService.GetUserByIdAsync(id);
-            if (user == null)
+            var users = await _userService.GetAllUsersAsync();
+            return Ok(users);
+        }
+
+     
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteUser(string id)
+        {
+            var deleted = await _userService.DeleteUserAsync(id);
+            if (deleted)
+            {
+                return Ok(new { message = "User deleted successfully" });
+            }
+            else
             {
                 return NotFound(new { message = "User not found" });
             }
-            return Ok(user);
+        }
+         
+            [HttpPut("{id}")]
+       public async Task<IActionResult> EditUser(string id, [FromBody] Biousers user)
+            {
+                var editedUser = await _userService.EditUserAsync(id, user);
+                if (editedUser == null)
+                {
+                    return NotFound(new { message = "User not found" });
+                }
+                return Ok(editedUser);
+            }
+
         }
     }
-}
+
+
+
